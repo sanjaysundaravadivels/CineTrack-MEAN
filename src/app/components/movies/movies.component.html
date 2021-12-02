@@ -1,0 +1,253 @@
+<main>
+  <section class="section section-shaped section-lg" style="min-height: 758px">
+    <div class="shape shape-style-1 bg-movies-default">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, 0.8)"
+      size="medium"
+      color="#fff"
+      type="square-jelly-box"
+      [fullScreen]="true"
+      ><p style="color: white">Loading...</p></ngx-spinner
+    >
+    <div style="margin-top: 70px; margin-bottom: 10px">
+      <section id="specials" class="specials">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <p>Search Here</p>
+          </div>
+
+          <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-3">
+              <ul class="nav nav-tabs flex-column">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active show"
+                    data-bs-toggle="tab"
+                    (click)="onMovie()"
+                    [ngClass]="{ active: isMovie }"
+                    >Movies</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    (click)="onTv()"
+                    [ngClass]="{ active: isTv }"
+                    >Tv shows</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    (click)="onTopMovie()"
+                    [ngClass]="{ active: isTopMovie }"
+                    >Top rated movies</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    (click)="onTopTv()"
+                    [ngClass]="{ active: isTopTv }"
+                    >Top rated Tv shows</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    (click)="onLatest()"
+                    [ngClass]="{ active: isLatest }"
+                    >Latest Movies</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-9 mt-4 mt-lg-0">
+              <div class="tab-content">
+                <div
+                  class="tab-pane show"
+                  id="tab-1"
+                  [ngClass]="{ active: isMovie }"
+                >
+                  <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                      <form
+                        class="form-group mb-3"
+                        [ngClass]="{ focused: focus === true }"
+                        (submit)="onSubMovie($event)"
+                      >
+                        <div class="input-group-prepend">
+                          <input
+                            type="text"
+                            [value]="myvar"
+                            (input)="myFun($event)"
+                            class="form-control"
+                            (focus)="focus = true"
+                            (blur)="focus = false"
+                            placeholder="Search for your favourite Movie"
+                          />
+                          <span class="input-group-btn">
+                            <button
+                              class="btnn btn btn-default"
+                              type="submit"
+                              (click)="showSpinner()"
+                            >
+                              Go!
+                            </button>
+                          </span>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="col-lg-4 text-center order-1 order-lg-2"></div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab-2" [ngClass]="{ active: isTv }">
+                  <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                      <form
+                        class="form-group mb-3"
+                        [ngClass]="{ focused: focus === true }"
+                        (submit)="onSubTv($event)"
+                      >
+                        <div class="input-group-prepend">
+                          <input
+                            type="text"
+                            [value]="myvar"
+                            (input)="myFun($event)"
+                            class="form-control"
+                            (focus)="focus = true"
+                            (blur)="focus = false"
+                            placeholder="Search for your favourite Tv show"
+                          />
+                          <span class="input-group-btn">
+                            <button
+                              class="btnn btn btn-default"
+                              type="submit"
+                              (click)="showSpinner()"
+                            >
+                              Go!
+                            </button>
+                          </span>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="col-lg-4 text-center order-1 order-lg-2"></div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane show"
+                  id="tab-3"
+                  [ngClass]="{ active: isTopMovie }"
+                >
+                  <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                      <h3 style="margin-top: 15%; width: 50%">
+                        Top rated Movies
+                      </h3>
+                    </div>
+                    <div class="col-lg-4 text-center order-1 order-lg-2"></div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane show"
+                  id="tab-3"
+                  [ngClass]="{ active: isTopTv }"
+                >
+                  <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                      <h3 style="margin-top: 15%; width: 50%">
+                        Top rated Tv shows
+                      </h3>
+                    </div>
+                    <div class="col-lg-4 text-center order-1 order-lg-2"></div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane show"
+                  id="tab-3"
+                  [ngClass]="{ active: isLatest }"
+                >
+                  <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                      <h3 style="margin-top: 15%; width: 50%">Latest Movies</h3>
+                    </div>
+                    <div class="col-lg-4 text-center order-1 order-lg-2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Specials Section -->
+    </div>
+
+    <!-- ======= Chefs Section ======= -->
+    <section id="chefs" class="chefs">
+      <div
+        class="container"
+        *ngIf="this.movieService.movieList.results.length != 0 && isLoaded"
+      >
+        <div>
+          <div class="row card-profile-image">
+            <div
+              class="col-lg-4 col-md-6"
+              *ngFor="
+                let item of this.movieService.movieList.results;
+                index as i
+              "
+              style="font: italic 2em 'Fira Sans', serif"
+            >
+              <div
+                class="member img-fluid rounded shadow-lg"
+                (click)="openModal(item.id)"
+                style="cursor: pointer"
+              >
+                <img
+                  class="img-fluid"
+                  src="{{
+                    'https://image.tmdb.org/t/p/original' + item.poster_path
+                  }} "
+                  alt="Card image cap"
+                  style="width: 316px; height: 474px"
+                  *ngIf="this.movieService.hasThumb[i]"
+                />
+                <img
+                  class="img-fluid"
+                  src="../../../assets/img/theme/movie.jpg"
+                  alt="Card image cap"
+                  style="width: 316px; height: 474px"
+                  *ngIf="!this.movieService.hasThumb[i]"
+                />
+                <div class="member-info">
+                  <div class="member-info-content">
+                    <h4>{{ item.title }}</h4>
+                    <span style="font-size: 0.7em; padding: 5px">
+                      Ratings : &nbsp;
+                      <i class="fa fa-star" style="color: goldenrod"></i>
+                      {{ item.vote_average || "" }} / 10
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Chefs Section -->
+  </section>
+</main>

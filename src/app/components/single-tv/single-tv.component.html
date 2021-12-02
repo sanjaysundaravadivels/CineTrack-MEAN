@@ -1,0 +1,342 @@
+<main>
+  <section class="section section-shaped section-lg" style="min-height: 758px">
+    <div class="shape shape-style-1 bg-single-default">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, 0.8)"
+      size="medium"
+      color="#fff"
+      type="square-jelly-box"
+      [fullScreen]="true"
+      ><p style="color: white">Loading...</p></ngx-spinner
+    >
+    <!-- ======= About Section ======= -->
+    <section
+      id="about"
+      class="about"
+      [ngStyle]="{
+        'background-image':
+          'url( ' + this.movieService.singleTv.backdrop_path + ')'
+      }"
+    >
+      <div class="container">
+        <flash-messages></flash-messages>
+        <div class="row">
+          <div
+            class="col-lg-6 order-1 order-lg-2"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="about-img">
+              <img
+                *ngIf="this.movieService.singleTv.poster_path != null"
+                src="{{
+                  'https://image.tmdb.org/t/p/original' +
+                    this.movieService.singleTv.poster_path
+                }} "
+                alt=""
+              />
+              <img
+                *ngIf="this.movieService.singleTv.poster_path == null"
+                src="../../../assets/img/theme/movie.jpg"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+            <div class="btns">
+              <a
+                class="btn-menu animated fadeInUp scrollto"
+                style="color: white; cursor: pointer"
+                (click)="
+                  yetListMovie(
+                    this.movieService.singleTv.id,
+                    this.movieService.singleTv.name,
+                    this.movieService.singleTv.poster_path,
+                    this.movieService.singleTv.vote_average
+                  )
+                "
+                >Add to WatchList</a
+              >
+              <a
+                class="btn-book animated fadeInUp scrollto"
+                style="color: white; cursor: pointer"
+                (click)="
+                  completedListMovie(
+                    this.movieService.singleTv.id,
+                    this.movieService.singleTv.name,
+                    this.movieService.singleTv.poster_path,
+                    this.movieService.singleTv.vote_average
+                  )
+                "
+                >Mark as Completed</a
+              >
+            </div>
+            <h3>
+              {{ this.movieService.singleTv.name }}
+            </h3>
+
+            <div class="container">
+              <div class="row">
+                <div class="col-6">
+                  <p class="fst-italic">
+                    Genres :
+                    <span
+                      *ngFor="
+                        let item of this.movieService.singleTv.genres;
+                        index as i
+                      "
+                    >
+                      {{ this.movieService.singleTv.genres[i].name }},
+                    </span>
+                  </p>
+                  <ul>
+                    <li style="color: white">
+                      <i class="fa fa-check-circle"></i> Release date :
+                      <span>{{
+                        this.movieService.singleTv.first_air_date
+                      }}</span>
+                    </li>
+                    <li style="color: white">
+                      <i class="fa fa-check-circle"></i> Language :
+                      <span>{{
+                        this.movieService.singleTv.original_language
+                      }}</span>
+                    </li>
+                    <li style="color: white">
+                      <i class="fa fa-check-circle"></i>Status :
+                      <span>{{ this.movieService.singleTv.status }} </span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-6 justify-content-center">
+                  <div
+                    class="
+                      icon icon-shape icon-shape-warning
+                      rounded-circle
+                      mb-4
+                    "
+                  >
+                    <i class="fa fa-star"></i>
+                  </div>
+                  &nbsp;
+                  <span
+                    style="
+                      color: white;
+                      border-bottom: 2px solid #cda45e;
+                      font-size: 26px;
+                      font-family: 'Open Sans', sans-serif;
+                      font-weight: 700;
+                    "
+                    >{{ this.movieService.singleTv.vote_average }} / 10</span
+                  >
+                </div>
+              </div>
+            </div>
+            <p>
+              {{ this.movieService.singleTv.overview }}
+            </p>
+            <section id="testimonialls" class="testimonialls section-bg">
+              <div class="container">
+                <div class="section-name">
+                  <ul id="menu-flters">
+                    <li
+                      (click)="onClick('cast')"
+                      style="cursor: pointer"
+                      [ngClass]="{ 'filter-active': isCast }"
+                    >
+                      Cast
+                    </li>
+                    <li
+                      (click)="onClick('crew')"
+                      style="cursor: pointer"
+                      [ngClass]="{ 'filter-active': isCrew }"
+                    >
+                      Crew
+                    </li>
+                  </ul>
+                </div>
+                <div class="container" *ngIf="isCast">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                      <div class="row row-grid">
+                        <div
+                          class="col-lg-4 col-md-4 col-sm-4"
+                          *ngFor="
+                            let item of this.movieService.tvCredits.cast;
+                            index as i
+                          "
+                        >
+                          <div class="testimoniall-item">
+                            <img
+                              *ngIf="
+                                this.movieService.tvCredits.cast[i]
+                                  .profile_path != null
+                              "
+                              [src]="
+                                getSantizeUrl(
+                                  'https://image.tmdb.org/t/p/w500' +
+                                    this.movieService.tvCredits.cast[i]
+                                      .profile_path
+                                )
+                              "
+                              class="testimoniall-img shadow shadow-lg--hover"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                this.movieService.tvCredits.cast[i]
+                                  .profile_path == null
+                              "
+                              src=" https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png "
+                              class="testimoniall-img shadow shadow-lg--hover"
+                              alt=""
+                            />
+                            <h3 style="margin: 0">
+                              {{ this.movieService.tvCredits.cast[i].name }}
+                            </h3>
+                            <h4 style="margin: 0">
+                              {{
+                                this.movieService.tvCredits.cast[i].character
+                              }}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="container" *ngIf="isCrew">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                      <div class="row row-grid">
+                        <div
+                          class="col-lg-4 col-md-4 col-sm-4"
+                          *ngFor="
+                            let item of this.movieService.tvCredits.crew;
+                            index as i
+                          "
+                        >
+                          <div class="testimoniall-item">
+                            <img
+                              *ngIf="
+                                this.movieService.tvCredits.crew[i]
+                                  .profile_path != null
+                              "
+                              [src]="
+                                getSantizeUrl(
+                                  'https://image.tmdb.org/t/p/w500' +
+                                    this.movieService.tvCredits.crew[i]
+                                      .profile_path
+                                )
+                              "
+                              class="testimoniall-img shadow shadow-lg--hover"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                this.movieService.tvCredits.crew[i]
+                                  .profile_path == null
+                              "
+                              src="../../../assets/img/theme/head.png "
+                              class="testimoniall-img shadow shadow-lg--hover"
+                              alt=""
+                            />
+                            <h3 style="margin: 0">
+                              {{ this.movieService.tvCredits.crew[i].name }}
+                            </h3>
+                            <h4 style="margin: 0">
+                              {{ this.movieService.tvCredits.crew[i].job }}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End About Section -->
+    <h3 style="margin: 20px 20px">
+      <span
+        style="
+          color: white;
+          border-bottom: 2px solid #cda45e;
+          font-size: 26px;
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 700;
+        "
+        >Similar movies</span
+      >
+      :
+    </h3>
+    <carousel [height]="270" [dots]="true">
+      <div
+        class="carousel-cell"
+        *ngFor="let item of this.movieService.similartv.results; index as i"
+      >
+        <section id="testimonials" class="testimonials section-bg">
+          <div class="container">
+            <div
+              class="testimonials-slider swiper-container"
+              data-aos-delay="100"
+            >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div
+                    class="testimonial-item"
+                    (click)="sim(this.movieService.similartv.results[i].id)"
+                  >
+                    <img
+                      *ngIf="
+                        this.movieService.similartv.results[i].poster_path !=
+                        null
+                      "
+                      [src]="
+                        getSantizeUrl(
+                          'https://image.tmdb.org/t/p/w500' +
+                            this.movieService.similartv.results[i].poster_path
+                        )
+                      "
+                      class="testimonial-img shadow shadow-lg--hover"
+                      alt=""
+                    />
+                    <img
+                      *ngIf="
+                        this.movieService.similartv.results[i].poster_path ==
+                        null
+                      "
+                      src="../../../assets/img/theme/movie.jpg"
+                      class="testimonial-img shadow shadow-lg--hover"
+                      alt=""
+                    />
+                    <h3>
+                      {{ this.movieService.similartv.results[i].name }}
+                    </h3>
+                    <h4>
+                      <i class="fa fa-star"></i
+                      >{{ this.movieService.similartv.results[i].vote_average }}
+                      / 10
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </carousel>
+  </section>
+</main>

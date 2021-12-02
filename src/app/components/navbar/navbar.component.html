@@ -1,0 +1,215 @@
+<nav
+  id="navbar-main"
+  class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light"
+>
+  <div class="container">
+    <a class="navbar-brand mr-lg-5" [routerLink]="['/']">
+      <img src="./assets/img/brand/Cinetrak.png" /> Cine Tracker
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="navbar_global"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="navbar_global"
+      [ngbCollapse]="isCollapsed"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a [routerLink]="['/']">
+              <img src="./assets/img/brand/blue.png" />
+            </a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button
+              type="button"
+              class="navbar-toggler"
+              (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed"
+              aria-controls="navbar_global"
+            >
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link no-caret"
+            [routerLink]="['/']"
+            data-toggle="dropdown"
+            role="button"
+          >
+            <i class="fa fa-home d-lg-none"></i>
+            <span class="nav-link-inner--text">Home</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link no-caret"
+            routerLinkActive="active"
+            [routerLink]="['keyfeatures']"
+            data-toggle="dropdown"
+            role="button"
+          >
+            <i class="ni ni-ui-04 d-lg-none"></i>
+            <span class="nav-link-inner--text">Key features</span>
+          </a>
+          <div class="dropdown-menu-xl dropdown-menu">
+            <div class="dropdown-menu-inner">
+              <a
+                routerLinkActive="active"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-primary
+                    rounded-circle
+                    text-white
+                  "
+                >
+                  <i class="ni ni-spaceship"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h6 class="heading gggg text-primary mb-md-1">
+                    Discover the best movies and TV shows
+                  </h6>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    A wide range of lists at your fingertips from trending and
+                    popular movies to movies climbing the box office.
+                  </p>
+                </div>
+              </a>
+              <a
+                routerLinkActive="active"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-success
+                    rounded-circle
+                    text-white
+                  "
+                >
+                  <i class="ni ni-check-bold"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h6 class="heading gggg text-primary mb-md-1">
+                    Check-In to movies and episodes anytime, anywhere!
+                  </h6>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Whether you are at the theaters or chilling at your friends
+                    house, just check in and share what you are watching.
+                  </p>
+                </div>
+              </a>
+              <a
+                routerLinkActive="active"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-warning
+                    rounded-circle
+                    text-white
+                  "
+                >
+                  <i class="ni ni-bag-17"></i>
+                </div>
+                <div class="media-body ml-3">
+                  <h5 class="heading gggg text-warning mb-md-1">
+                    Create and Manage your Watchlists
+                  </h5>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Build your watchlists and custom lists with a single tap.
+                    Never forget that awesome movie you once heard your friend
+                    talk about.
+                  </p>
+                  .....
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link no-caret"
+            [routerLink]="['/contact']"
+            data-toggle="dropdown"
+            role="button"
+          >
+            <i class="ni ni-collection d-lg-none"></i>
+            <span class="nav-link-inner--text">Contact us</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="authService.islogin">
+          <a
+            class="nav-link no-caret"
+            [routerLink]="['/profile']"
+            data-toggle="dropdown"
+            role="button"
+          >
+            <i class="fa fa-user-circle d-lg-none"></i>
+            <span class="nav-link-inner--text">My profile</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+        <li class="nav-item" *ngIf="!authService.islogin">
+          <a
+            class="btn btn-neutral btn-icon"
+            data-toggle="collapse"
+            (click)="isClicked()"
+          >
+            <span class="btn-inner--icon">
+              <img src="./assets/img/icons/common/google.svg" />
+            </span>
+            <span class="btn-inner--text">Sign in</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.islogin">
+          <a data-toggle="collapse">
+            <span>
+              <ng-template #popContent class="align-items-lg-center"
+                ><a
+                  class="btn btn-neutral btn-icon"
+                  data-toggle="collapse"
+                  (click)="isClicked()"
+                  style="margin: 0 55px"
+                >
+                  <span class="btn-inner--text">Sign out</span>
+                </a></ng-template
+              >
+              <img
+                [src]="picture"
+                [alt]="name[0]"
+                [ngbPopover]="popContent"
+                [popoverTitle]="email"
+                class="img-fluid rounded-circle shadow-lg"
+                style="
+                  height: 60px;
+                  width: 60px;
+                  cursor: pointer;
+                  align-items: center;
+                "
+              />
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

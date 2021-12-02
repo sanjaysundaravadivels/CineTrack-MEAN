@@ -1,0 +1,10 @@
+.menu #menu-flters li:hover,
+.menu #menu-flters li.filter-active {
+  color: #cda45e;
+}
+.gggg {
+  letter-spacing: 0.025em;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}

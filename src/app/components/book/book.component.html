@@ -1,0 +1,178 @@
+<main>
+  <section class="section section-shaped section-lg" style="min-height: 758px">
+    <div class="shape shape-style-1 bg-gradient-default">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div style="margin-top: 70px; margin-bottom: 10px">
+      <form
+        (submit)="onSub($event)"
+        class="form-group mb-3"
+        [ngClass]="{ focused: focus === true }"
+      >
+        <div class="input-group-prepend">
+          <input
+            type="text"
+            [value]="myvar"
+            (input)="myFun($event)"
+            class="form-control"
+            (focus)="focus = true"
+            (blur)="focus = false"
+            placeholder="Search for your favourite book"
+          />
+          <span class="input-group-btn">
+            <button class="btnn btn btn-default" type="submit">Go!</button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <ng-template #content let-modal>
+      <div
+        class="modal-content bg-gradient-danger"
+        *ngIf="this.bookService.hasSingleBook"
+      >
+        <flash-messages></flash-messages>
+        <div class="modal-header" style="align-items: center">
+          <button
+            class="btn btn-icon btn-3 btn-primary"
+            type="button"
+            (click)="
+              completedListBook(
+                this.bookService.singleBook.id,
+                this.bookService.singleBook.volumeInfo.title,
+                this.bookService.singleBook.volumeInfo.imageLinks.thumbnail,
+                this.bookService.singleBook.volumeInfo.authors
+              )
+            "
+          >
+            <span class="btn-inner--icon"
+              ><i class="ni ni-check-bold"></i
+            ></span>
+            <span class="btn-inner--text">Mark as Completed</span>
+          </button>
+          <button
+            class="btn btn-icon btn-3 btn-primary"
+            type="button"
+            (click)="
+              yetListBook(
+                this.bookService.singleBook.id,
+                this.bookService.singleBook.volumeInfo.title,
+                this.bookService.singleBook.volumeInfo.imageLinks.thumbnail,
+                this.bookService.singleBook.volumeInfo.authors
+              )
+            "
+          >
+            <span class="btn-inner--icon"
+              ><i class="ni ni-book-bookmark"></i
+            ></span>
+            <span class="btn-inner--text">Add to list</span>
+          </button>
+          <button
+            type="button"
+            class="close btn"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          >
+            <span aria-hidden="true" style="color: antiquewhite">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section id="testimonials" class="testimonials section-bg">
+            <div class="container">
+              <div class="section-title">
+                <p>{{ this.bookService.singleBook.volumeInfo.title }}</p>
+                <h2>
+                  By , {{ this.bookService.singleBook.volumeInfo.authors }}
+                </h2>
+              </div>
+              <div class="testimonials-slider swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="testimonial-item">
+                      <p>
+                        <i class="fa fa-quote-left quote-icon-left"></i>
+                        {{ this.bookService.singleBook.volumeInfo.description }}
+                        <i class="fa fa-quote-right quote-icon-right"></i>
+                      </p>
+                      <img
+                        src="{{
+                          this.bookService.singleBook.volumeInfo.imageLinks
+                            .thumbnail
+                        }}"
+                        class="testimonial-img shadow shadow-lg--hover"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- ======= Chefs Section ======= -->
+    <section id="chefs" class="chefs">
+      <div class="container" *ngIf="this.bookService.books.items.length == 9">
+        <div>
+          <div class="row">
+            <div
+              class="col-lg-4 col-md-6"
+              *ngFor="let item of this.bookService.books.items; index as i"
+            >
+              <div class="member img-fluid rounded shadow-lg">
+                <img
+                  *ngIf="!this.bookService.hasThumb[i]"
+                  class="img-fluid"
+                  src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/26345/book-clipart-md.png"
+                  alt="Card image cap"
+                  style="margin: 40px; height: 150px; width: 150px"
+                />
+                <img
+                  *ngIf="this.bookService.hasThumb[i]"
+                  class="img-fluid"
+                  src="{{ item.volumeInfo.imageLinks.thumbnail }} "
+                  alt="Card image cap"
+                  style="margin: 40px; height: 150px; width: 150px"
+                />
+                <div class="member-info">
+                  <div class="member-info-content">
+                    <h4>{{ item.volumeInfo.title }}</h4>
+                    <span *ngIf="item.volumeInfo.authors">
+                      By &nbsp;- &nbsp; {{ item.volumeInfo.authors }}</span
+                    >
+                  </div>
+                  <div class="social">
+                    <a
+                      style="cursor: pointer"
+                      (click)="openVerticallyCentered(content, item.id)"
+                      >More details</a
+                    >
+                    <a
+                      href="{{ item.volumeInfo.previewLink }}"
+                      target="_blank"
+                      (click)="gBook(item.id)"
+                      >Preview</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Chefs Section -->
+  </section>
+</main>

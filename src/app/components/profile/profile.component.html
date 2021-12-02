@@ -1,0 +1,472 @@
+<main class="profile-page">
+  <section class="section-profile-cover section-shaped my-0">
+    <!-- Circles background -->
+    <div class="shape shape-style-1 bg-profile-default">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- Modal -->
+    <ng-template #content let-modal>
+      <div
+        class="modal-content bg-gradient-danger"
+        *ngIf="this.bookService.hasSingleBook && isBookList"
+      >
+        <flash-messages></flash-messages>
+        <div class="modal-header" style="align-items: center">
+          <button class="btn btn-icon btn-3 btn-primary" type="button">
+            <span class="btn-inner--icon"
+              ><i class="ni ni-check-bold"></i
+            ></span>
+            <span
+              class="btn-inner--text"
+              (click)="deleteBook(this.bookService.singleBook.id)"
+              >Remove item</span
+            >
+          </button>
+          <button class="btn btn-icon btn-3 btn-primary" type="button">
+            <span class="btn-inner--icon"
+              ><i class="ni ni-book-bookmark"></i
+            ></span>
+            <span
+              class="btn-inner--text"
+              *ngIf="iscompList"
+              (click)="
+                markAsyet(
+                  this.bookService.singleBook.id,
+                  this.bookService.singleBook.volumeInfo.title,
+                  this.bookService.singleBook.volumeInfo.imageLinks.thumbnail,
+                  this.bookService.singleBook.volumeInfo.authors
+                )
+              "
+              >Move to Pending</span
+            >
+            <span
+              class="btn-inner--text"
+              *ngIf="!iscompList"
+              (click)="
+                markAscompleted(
+                  this.bookService.singleBook.id,
+                  this.bookService.singleBook.volumeInfo.title,
+                  this.bookService.singleBook.volumeInfo.imageLinks.thumbnail,
+                  this.bookService.singleBook.volumeInfo.authors
+                )
+              "
+              >Move to completed</span
+            >
+          </button>
+          <button
+            type="button"
+            class="close btn"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          >
+            <span aria-hidden="true" style="color: antiquewhite">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section id="testimonials" class="testimonials section-bg">
+            <div class="container">
+              <div class="section-title">
+                <p>{{ this.bookService.singleBook.volumeInfo.title }}</p>
+                <h2>
+                  By , {{ this.bookService.singleBook.volumeInfo.authors }}
+                </h2>
+              </div>
+              <div class="testimonials-slider swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="testimonial-item">
+                      <p>
+                        <i class="fa fa-quote-left quote-icon-left"></i>
+                        {{ this.bookService.singleBook.volumeInfo.description }}
+                        <i class="fa fa-quote-right quote-icon-right"></i>
+                      </p>
+                      <img
+                        src="{{
+                          this.bookService.singleBook.volumeInfo.imageLinks
+                            .thumbnail
+                        }}"
+                        class="testimonial-img shadow shadow-lg--hover"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </ng-template>
+    <!-- ----------------------------------------------------------------------------------- -->
+    <ng-template #content2 let-modal>
+      <div class="modal-content bg-gradient-danger" *ngIf="isMovieList">
+        <flash-messages></flash-messages>
+        <div class="modal-header" style="align-items: center">
+          <button class="btn btn-icon btn-3 btn-primary" type="button">
+            <span class="btn-inner--icon"
+              ><i class="ni ni-check-bold"></i
+            ></span>
+            <span class="btn-inner--text" (click)="deleteMovie(singleList.id)"
+              >Remove item</span
+            >
+          </button>
+          <button class="btn btn-icon btn-3 btn-primary" type="button">
+            <span class="btn-inner--icon"
+              ><i class="ni ni-book-bookmark"></i
+            ></span>
+            <span
+              class="btn-inner--text"
+              *ngIf="iscompList"
+              (click)="
+                markAsyetMovie(
+                  singleList.id,
+                  singleList.title || singleList.name,
+                  singleList.poster_path,
+                  singleList.vote_average
+                )
+              "
+              >Move to Pending</span
+            >
+            <span
+              class="btn-inner--text"
+              *ngIf="!iscompList"
+              (click)="
+                markAscompletedMovie(
+                  singleList.id,
+                  singleList.title || singleList.name,
+                  singleList.poster_path,
+                  singleList.vote_average
+                )
+              "
+              >Move to completed</span
+            >
+          </button>
+          <button
+            type="button"
+            class="close btn"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          >
+            <span aria-hidden="true" style="color: antiquewhite">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section id="testimonials" class="testimonials section-bg">
+            <div class="container">
+              <div class="section-title">
+                <p>{{ singleList.title || singleList.name }}</p>
+                <h2>
+                  <i class="fa fa-star"></i> &nbsp;
+                  {{ singleList.vote_average }}
+                </h2>
+                <br />
+
+                <button
+                  class="btn btn-icon btn-3 btn-primary"
+                  (click)="more(singleList.id)"
+                  style="cursor: pointer"
+                  (click)="modal.dismiss('Cross click')"
+                >
+                  More details
+                </button>
+              </div>
+              <div class="testimonials-slider swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="testimonial-item">
+                      <p>
+                        <i class="fa fa-quote-left quote-icon-left"></i>
+                        {{ singleList.overview }}
+                        <i class="fa fa-quote-right quote-icon-right"></i>
+                      </p>
+                      <img
+                        src="{{
+                          'https://image.tmdb.org/t/p/w500' +
+                            singleList.poster_path
+                        }}"
+                        class="testimonial-img shadow shadow-lg--hover"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </ng-template>
+    <div class="container py-lg-md d-flex">
+      <div class="col px-0">
+        <div style="text-align: center; margin-top: 120px">
+          <div>
+            <h1
+              class="
+                display-3
+                text-white
+                animate__animated animate__rubberBand
+                name
+              "
+            >
+              Welcome &nbsp; {{ this.name }}
+            </h1>
+            <p class="lead text-white"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SVG separator -->
+    <div class="separator separator-bottom separator-skew">
+      <svg
+        x="0"
+        y="0"
+        viewBox="0 0 2560 100"
+        preserveAspectRatio="none"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card card-profile shadow mt--300">
+        <div class="px-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="javascript:void(0)">
+                  <img [src]="picture" [alt]="name[0]" class="rounded-circle" />
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+              <div class="card-profile-actions py-4 mt-lg-0">
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-sm btn-info mr-4"
+                  (click)="getBookList()"
+                >
+                  Books
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-sm btn-default float-right"
+                  (click)="getMovieList()"
+                  >Movies and shows</a
+                >
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-1">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading"><i class="fa fa-user"></i></span>
+                </div>
+                <div>
+                  <span class="heading">Your stuff</span>
+                  <span class="description">View and manage your Lists</span>
+                </div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5" style="background-color: black">
+            <section id="menu" class="menu section-bg">
+              <div class="container" data-aos="fade-up" *ngIf="isBookList">
+                <div class="section-title">
+                  <p>Your Book List</p>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 d-flex justify-content-center">
+                    <div
+                      class="section-title"
+                      *ngIf="this.watchListService.res1.bookList.length == 0"
+                    >
+                      <p>
+                        Sorry your List is Empty try to add items in your List
+                      </p>
+                    </div>
+                    <ul
+                      id="menu-flters"
+                      *ngIf="this.watchListService.res1.bookList.length != 0"
+                    >
+                      <li
+                        (click)="setItem('all')"
+                        [ngClass]="{ 'filter-active': allItem }"
+                      >
+                        All
+                      </li>
+                      <li
+                        (click)="setItem('completed')"
+                        [ngClass]="{ 'filter-active': completed }"
+                      >
+                        Compeletd
+                      </li>
+                      <li
+                        (click)="setItem('yet')"
+                        [ngClass]="{ 'filter-active': yet }"
+                      >
+                        Pending to read
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row menu-container">
+                  <div
+                    class="col-lg-6 menu-item"
+                    *ngFor="
+                      let item of this.watchListService.res1.bookList;
+                      index as i
+                    "
+                    [ngClass]="{
+                      disp: !(
+                        (completed && item.isCompleted) ||
+                        (yet && !item.isCompleted) ||
+                        allItem
+                      )
+                    }"
+                    style="--animation-order: {{ i + 1 }};"
+                  >
+                    <div>
+                      <img src="{{ item.picture }}" class="menu-img" alt="" />
+                      <div class="menu-content">
+                        <a
+                          (click)="
+                            openVerticallyCentered(
+                              content,
+                              item.id,
+                              item.isCompleted
+                            )
+                          "
+                          style="cursor: pointer"
+                          >{{ item.title }}</a
+                        ><span
+                          (click)="deleteBook(item.id)"
+                          style="cursor: pointer"
+                          >Remove</span
+                        >
+                      </div>
+                      <div class="menu-ingredients">
+                        By &nbsp; {{ item.authors || item.title }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container" data-aos="fade-up" *ngIf="isMovieList">
+                <div class="section-title">
+                  <p>Your Movies and Shows List</p>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 d-flex justify-content-center">
+                    <div
+                      class="section-title"
+                      *ngIf="this.movieListService.res1.movieList.length == 0"
+                    >
+                      <p>
+                        Sorry your List is Empty try to add items in your List
+                      </p>
+                    </div>
+                    <ul
+                      id="menu-flters"
+                      *ngIf="this.movieListService.res1.movieList.length != 0"
+                    >
+                      <li
+                        (click)="setItem('all')"
+                        [ngClass]="{ 'filter-active': allItem }"
+                      >
+                        All
+                      </li>
+                      <li
+                        (click)="setItem('completed')"
+                        [ngClass]="{ 'filter-active': completed }"
+                      >
+                        Compeletd
+                      </li>
+                      <li
+                        (click)="setItem('yet')"
+                        [ngClass]="{ 'filter-active': yet }"
+                      >
+                        WatchList
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row menu-container">
+                  <div
+                    class="col-lg-6 menu-item"
+                    *ngFor="
+                      let item of this.movieListService.res1.movieList;
+                      index as i
+                    "
+                    [ngClass]="{
+                      disp: !(
+                        (completed && item.isCompleted) ||
+                        (yet && !item.isCompleted) ||
+                        allItem
+                      )
+                    }"
+                  >
+                    <div>
+                      <img
+                        src="{{
+                          'https://image.tmdb.org/t/p/w500' + item.picture
+                        }}"
+                        class="menu-img"
+                        alt=""
+                      />
+                      <div class="menu-content">
+                        <a
+                          (click)="
+                            openVerticallyCentered(
+                              content2,
+                              item.id,
+                              item.isCompleted,
+                              item.type
+                            )
+                          "
+                          style="cursor: pointer"
+                          >{{ item.title }}</a
+                        ><span
+                          (click)="deleteMovie(item.id, item.type)"
+                          style="cursor: pointer"
+                          >Remove</span
+                        >
+                      </div>
+                      <div class="menu-ingredients">
+                        <i class="fa fa-star"></i> &nbsp; {{ item.ratings }} /10
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="mt-5 py-5 border-top text-center">
+            <div class="row justify-content-center">
+              <div class="col-lg-9">
+                <h3
+                  style="font: italic small-caps bold 16px/2 cursive"
+                  class="animate__animated animate__rubberBand"
+                >
+                  Thank you so much your support.We are so grateful for the
+                  pleasure of serving you and hope we met your expectations.
+                  <span><i class="fa fa-smile-o"></i></span>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
